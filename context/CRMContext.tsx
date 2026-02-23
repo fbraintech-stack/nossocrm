@@ -552,6 +552,22 @@ const CRMInnerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
       }
     }
 
+    // Sync rawDeals cache so components reading from useCRM().deals (e.g., DealDetailModal)
+    // can find the newly created deal immediately, without waiting for Realtime.
+    if (createdDeal) {
+      try {
+        queryClient.setQueryData<Deal[]>(
+          queryKeys.deals.lists(),
+          (old = []) => {
+            if (old.some(d => d.id === createdDeal.id)) return old;
+            return [createdDeal, ...old];
+          }
+        );
+      } catch {
+        // Never let cache sync break deal creation.
+      }
+    }
+
     // #region agent log
     if (process.env.NODE_ENV !== 'production') {
       const finalCache = queryClient.getQueryData<DealView[]>([...queryKeys.deals.lists(), 'view']) || [];
