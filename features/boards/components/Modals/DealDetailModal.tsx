@@ -640,7 +640,18 @@ export const DealDetailModal: React.FC<DealDetailModalProps> = ({ dealId, isOpen
                             );
                           })()}
                       </p>
-                      <p className="text-slate-500 text-xs">{deal.contactEmail}</p>
+                      {contact?.phone && (
+                        <p className="text-slate-500 text-xs flex items-center gap-1">
+                          <Phone size={11} />
+                          {contact.phone}
+                        </p>
+                      )}
+                      {deal.contactEmail && (
+                        <p className="text-slate-500 text-xs flex items-center gap-1">
+                          <Mail size={11} />
+                          {deal.contactEmail}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
