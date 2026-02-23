@@ -1,4 +1,4 @@
-# AGENTS.md — NossoCRM
+# AGENTS.md — Acreditando CRM
 
 ## Commands
 - **Dev**: `npm run dev`
